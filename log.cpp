@@ -4,8 +4,19 @@
 
 using namespace std;
 
+string fill_time(int num){
+	string check="";
+	if(num<10){
+		check+=("0"+to_string(num));
+	}
+	else{
+		check+=to_string(num);
+	}
+	return check;
+}
+
 string get_date(){
-	string sDate;
+	string sDate="";
 	time_t timer;
 	tm* t;
 	timer=time(NULL);
@@ -14,22 +25,14 @@ string get_date(){
 	t->tm_year+=1900;
 	t->tm_mon++;
 	
-	sDate+=to_string(t->tm_year%100);
-	if(t->tm_mon<10){
-		sDate=sDate+"0"+to_string(t->tm_mon);
-	}
-	else{
-		sDate+=to_string(t->tm_mon);
-	}
+	sDate+=fill_time(t->tm_year%100);
+	sDate+=fill_time(t->tm_mon);
+	sDate+=fill_time(t->tm_mday)+"_";
+	sDate+=fill_time(t->tm_hour)+"h";
+	sDate+=fill_time(t->tm_min)+"m";
 	
-	if(t->tm_mday<10){
-		sDate=sDate+="0"+to_string(t->tm_mday);
-	}
-	else{
-		sDate+=to_string(t->tm_mday);
-	}
-
 	return sDate;
+	
 }
 
 // record function
