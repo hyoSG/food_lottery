@@ -1,7 +1,8 @@
 //practice in cli environment.
 
 #include <iostream>
-#include <fstream>
+//#include <fstream>
+#include <cstdio>
 #include <vector>
 #include <string>
 #include <ctime>

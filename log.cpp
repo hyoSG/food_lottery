@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <ctime>
-#include <string>
+#include <cstdio>
 
 using namespace std;
 
@@ -15,8 +14,10 @@ string fill_time(int num){
 	return check;
 }
 
-string get_date(){
+const char* get_date(){
 	string sDate="";
+	const char* cDate;
+	
 	time_t timer;
 	tm* t;
 	timer=time(NULL);
@@ -25,14 +26,16 @@ string get_date(){
 	t->tm_year+=1900;
 	t->tm_mon++;
 	
+	sDate+="./log/";	
 	sDate+=fill_time(t->tm_year%100);
 	sDate+=fill_time(t->tm_mon);
 	sDate+=fill_time(t->tm_mday)+"_";
 	sDate+=fill_time(t->tm_hour)+"h";
-	sDate+=fill_time(t->tm_min)+"m";
-	
-	return sDate;
-	
+	sDate+=fill_time(t->tm_min)+"m.txt";
+		
+	cDate=sDate.c_str();	
+
+	return cDate;
 }
 
 // record function
@@ -42,14 +45,8 @@ void write_log(string menu){
         cin>>check;
 
         if(check=="yes" || check=="y"){
-                ofstream fout;
-		string sDate=get_date();
-		
-                fout.open(sDate+".txt");
-
-                fout<<menu<<endl;
-
-                fout.close();
-
-        }
+		FILE* pFile=fopen(get_date(),"w");
+		fprintf(pFile,menu.c_str());
+		fclose(pFile);
+	}
 }
